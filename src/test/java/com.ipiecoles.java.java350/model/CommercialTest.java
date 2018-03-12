@@ -7,14 +7,14 @@ package com.ipiecoles.java.java350.model;
         import org.junit.Test;
         import org.junit.runner.RunWith;
 
-
+@RunWith(JUnitParamsRunner.class)
 public class CommercialTest {
 
     @Test
     @Parameters({
             //"null,500d",
             "0d, 500d",
-            "10000d,5000d",
+            "100000d,5000d",
     })
     public void testPrimeAnnuelle(Double caAnnuel, Double expectedPrime)
     {
