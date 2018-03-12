@@ -1,5 +1,6 @@
 package com.ipiecoles.java.java350.repository;
 
+import com.ipiecoles.java.java350.MySpringApplication;
 import com.ipiecoles.java.java350.model.Commercial;
 import com.ipiecoles.java.java350.model.Employe;
 import org.assertj.core.api.Assertions;
@@ -8,12 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+//@DataJpaTest
+@SpringBootTest(classes= MySpringApplication.class)
 public class EmployeRepositoryTest {
 
     @Autowired
@@ -82,7 +85,7 @@ public class EmployeRepositoryTest {
         List<Employe> employeList= employeRepository.findByNomOrPrenomAllIgnoreCase("Valls");
         //Then
         Assertions.assertThat(employeList).isEmpty();
-     ;
+
 
     }
 
