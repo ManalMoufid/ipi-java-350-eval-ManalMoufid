@@ -3,7 +3,10 @@ package com.ipiecoles.java.java350.repository;
 import com.ipiecoles.java.java350.MySpringApplication;
 import com.ipiecoles.java.java350.model.Commercial;
 import com.ipiecoles.java.java350.model.Employe;
+import com.ipiecoles.java.java350.repository.EmployeRepository;
 import org.assertj.core.api.Assertions;
+
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,79 +17,111 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+/**
+ * Created by HCHARBONNEYR on 12/03/2018.
+ */
 @RunWith(SpringRunner.class)
 //@DataJpaTest
-@SpringBootTest(classes= MySpringApplication.class)
+@SpringBootTest(classes = MySpringApplication.class)
 public class EmployeRepositoryTest {
 
     @Autowired
     private EmployeRepository employeRepository;
 
-    Commercial pierreDurand, rachidDurand, manuelPierre;
-
+    Commercial pierreDurand,rachidDurand,manuelPierre;
     @Before
-    public void setUp()
-    {
-        //Supprimer toutes les données de la table employé
+    public void setUp(){
         employeRepository.deleteAll();
 
-        // Ajouter nos données de Test
         pierreDurand = new Commercial();
-        pierreDurand.setPrenom("Pierre");
         pierreDurand.setNom("Durand");
-        pierreDurand=employeRepository.save(pierreDurand);
+        pierreDurand.setPrenom("Pierre");
+        pierreDurand = employeRepository.save(pierreDurand);
 
         rachidDurand = new Commercial();
-        rachidDurand.setPrenom("Rachid");
         rachidDurand.setNom("Durand");
-        rachidDurand=employeRepository.save(rachidDurand);
+        rachidDurand.setPrenom("Rachid");
+        rachidDurand = employeRepository.save(rachidDurand);
 
         manuelPierre = new Commercial();
-        manuelPierre.setPrenom("Manuel");
         manuelPierre.setNom("Pierre");
-        manuelPierre=employeRepository.save(manuelPierre);
+        manuelPierre.setPrenom("Manuel");
+        manuelPierre = employeRepository.save(manuelPierre);
+    }
+
+
+    @Test
+    public void testfindByNomOrPrenomAllIgnoreCasePrenom(){
+        //given
+        /*
+        Commercial c = new Commercial();
+        c.setPrenom("Pierre");
+        c.setNom("Durand");
+        c = employeRepository.save(c);
+        */
+        //when
+        List<Employe> employeList = employeRepository.findByNomOrPrenomAllIgnoreCase("pierre");
+        //then
+        Assertions.assertThat(employeList).isNotEmpty();
+        Assertions.assertThat(employeList).hasSize(2);
+        Assertions.assertThat(employeList).contains(pierreDurand,manuelPierre);
     }
 
     @Test
-    public void testFindByNomOuPrenomAllIgnoreCase()
-    {
-        //Given
-
-        //When
-        List<Employe> employeList= employeRepository.findByNomOrPrenomAllIgnoreCase("pierre");
-        //Then
+    public void testFindByNomOrPrenomAllIgnoreCaseNom(){
+        //given
+        /*
+        Commercial c = new Commercial();
+        c.setPrenom("Pierre");
+        c.setNom("Durand");
+        c = employeRepository.save(c);
+        */
+        //when
+        List<Employe> employeList = employeRepository.findByNomOrPrenomAllIgnoreCase("durand");
+        //then
         Assertions.assertThat(employeList).isNotEmpty();
         Assertions.assertThat(employeList).hasSize(2);
         Assertions.assertThat(employeList).contains(pierreDurand);
-        Assertions.assertThat(employeList).contains(manuelPierre);
+        Assertions.assertThat(employeList).contains(rachidDurand);
+    }
+    @Test
+    public void testFindByNomOrPrenomAllIgnoreCaseMulti(){
+        //given
 
+        //when
+        List<Employe> employeList = employeRepository.findByNomOrPrenomAllIgnoreCase("durand");
+        //then
+        Assertions.assertThat(employeList).isNotEmpty();
+        Assertions.assertThat(employeList).hasSize(2);
+        Assertions.assertThat(employeList).contains(pierreDurand);
+        Assertions.assertThat(employeList).contains(rachidDurand);
     }
 
     @Test
-    public void testFindByNomOuPrenomAllIgnoreCasePrenom()
-    {
-        //Given
+    public void testFindByNomOrPrenomAllIgnoreCasePrenomMaj(){
+        //given
 
-        //When
-        List<Employe> employeList= employeRepository.findByNomOrPrenomAllIgnoreCase("RACHID");
-        //Then
+        //when
+        List<Employe> employeList = employeRepository.findByNomOrPrenomAllIgnoreCase("RACHID");
+        //then
         Assertions.assertThat(employeList).isNotEmpty();
         Assertions.assertThat(employeList).hasSize(1);
         Assertions.assertThat(employeList).contains(rachidDurand);
-
     }
 
     @Test
-    public void testFindByNomOuPrenomAllIgnoreCaseNotFound()
-    {
-        //Given
+    public void testFindByNomOrPrenomAllIgnoreCaseNotFound(){
+        //given
+        /*
+        Commercial c = new Commercial();
+        c.setPrenom("Pierre");
+        c.setNom("Durand");
+        c = employeRepository.save(c);
+        */
+        //when
+        List<Employe> employeList = employeRepository.findByNomOrPrenomAllIgnoreCase("Valls");
+        //then
 
-        //When
-        List<Employe> employeList= employeRepository.findByNomOrPrenomAllIgnoreCase("Valls");
-        //Then
         Assertions.assertThat(employeList).isEmpty();
-
-
     }
-
 }
