@@ -18,7 +18,7 @@ public class CommercialParameterizedTest {
     @Parameter (value=1)
         public Note expectedNote;
 
-    @Parameterized.Parameters(name = "performance {0} équivalent à {1}")
+    @Parameterized.Parameters(name = " {0} correspond à  : {1}")
     public static Collection<Object[]> data()
     {
         return Arrays.asList(new Object[][]
@@ -43,9 +43,5 @@ public class CommercialParameterizedTest {
 
         Assertions.assertThat(note).isEqualTo(expectedNote);
     }
-
-
-
-
 
 }

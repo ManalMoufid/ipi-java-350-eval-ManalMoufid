@@ -16,6 +16,7 @@ public class CommercialTest {
             "0d, 500d",
             "100000d,5000d",
     })
+
     public void testPrimeAnnuelle(Double caAnnuel, Double expectedPrime)
     {
         //Given : Initialisation des données d'entrée
