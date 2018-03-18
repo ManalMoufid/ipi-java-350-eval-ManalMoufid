@@ -21,6 +21,7 @@ public class testManager {
             "3000d,8,6300d",
     })
 
+
     public void testSetSalaire(Double salaire, Double taille, Double salaireExpected ) {
         //GIVEN
         Set<Technicien> equipe = new HashSet<>();
@@ -44,6 +45,36 @@ public class testManager {
         Double salaireFinal= manager.getSalaire();
         Assertions.assertThat(salaireFinal).isNotNull();
         Assertions.assertThat(salaireFinal).isEqualTo(salaireExpected);
+
+    }
+
+    @Test
+    @Parameters({
+            "0,1009d",
+            "5,2259d",
+            // "8,6300d",
+    })
+    public void testGetPrimeAnnuelle(Integer taille, Double primeExpected)
+
+    {
+        //GIVEN
+        Set<Technicien> equipe = new HashSet<>();
+        Manager manager = new Manager();
+        int i=0;
+        while (i < taille) {
+            Technicien technicien = new Technicien();
+            technicien.setGrade(i);
+            equipe.add(technicien);
+            i++;
+        }
+
+        manager.setEquipe(equipe);
+        //When :
+        double prime= manager.getPrimeAnnuelle();
+        //Then :
+        Double primeFinal= manager.getPrimeAnnuelle();
+        Assertions.assertThat(primeFinal).isNotNull();
+        Assertions.assertThat(primeFinal).isEqualTo(primeExpected);
 
     }
 
